@@ -17,7 +17,7 @@ class KlassController extends Controller
      */
     public function index(): JsonResource
     {
-        return KlassResource::collection(Klass::all());
+        return KlassResource::collection(Klass::with('students', 'lectures')->get());
     }
 
     /**

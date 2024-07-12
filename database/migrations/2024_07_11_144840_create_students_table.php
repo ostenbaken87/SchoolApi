@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->foreignId('klass_id')->nullable()->index()->constrained('klasses')->onDelete('set null');
+            $table->unsignedBigInteger('klass_id')->nullable();
+            $table->foreign('klass_id')->references('id')->on('klasses')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -14,9 +14,9 @@ class Student extends Model
     protected $table = 'students';
     protected $guarded = false;
 
-    public function klass(): HasOne
+    public function klass(): BelongsTo
     {
-        return $this->hasOne(Klass::class);
+        return $this->BelongsTo(Klass::class);
     }
 
     public function lecture(): BelongsToMany
