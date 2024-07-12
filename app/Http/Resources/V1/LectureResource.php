@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class StudentResource extends JsonResource
+class LectureResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +17,10 @@ class StudentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'klass_id' => $this->klass_id,
-            'klass_name' => $this->klass?->name,
-            'lectures' => $this->lectures?->pluck('topic'),
+            'topic' => $this->topic,
+            'description' => $this->description,
+            'students' => $this->students?->pluck('name'),
+            'klass' => $this->klass?->pluck('name'),
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s'),
         ];

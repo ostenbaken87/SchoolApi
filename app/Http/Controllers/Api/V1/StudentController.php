@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Student;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
-use App\Http\Requests\UpdateStudentRequest;
-use App\Models\Student;
 use App\Http\Resources\V1\StudentResource;
+use App\Http\Requests\UpdateStudentRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentController extends Controller
@@ -22,7 +24,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request): JsonResource
+    public function store(StoreStudentRequest $request)
     {
         return new StudentResource(Student::create($request->validated()));
     }
@@ -50,5 +52,18 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         return response()->json($student->delete(), 204);
+    }
+
+    public function addLectures(Student $student, Request $request)
+    {
+        $student = Student::findOrFail($student->id);
+
+        $lectures = $request->input('lectures',[]);
+        $student->lectures()->syncWithoutDetaching($lectures);
+
+        return response()->json([
+            'message' => 'Lectures added successfully',
+            'student' => $student->load('lectures')
+        ], 200);
     }
 }
