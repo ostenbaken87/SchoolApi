@@ -22,7 +22,8 @@ class StoreKlassRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:klasses'],
+            'name' => 'required|string|max:255|unique:klasses',
+            'lectures' => 'array|nullable',
         ];
     }
 }

@@ -18,5 +18,9 @@ Route::prefix('v1')->group(function () {
     });
     
     Route::apiResource('klasses', KlassController::class);
+    Route::group(['prefix' => 'klasses/{klass}'], function () {
+        Route::post('add-study-plan', [KlassController::class, 'addStudyPlan']);
+        Route::post('update-study-plan', [KlassController::class, 'updateStudyPlan']);
+    });
     Route::apiResource('lectures', LectureController::class);
 });
