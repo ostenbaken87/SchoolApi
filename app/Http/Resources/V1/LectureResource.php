@@ -15,6 +15,14 @@ class LectureResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($request->query('onlyBasicInfo', false)) {
+            return [
+                'id' => $this->id,
+                'topic' => $this->topic,
+                'description' => $this->description,
+            ];
+        }
+        
         return [
             'id' => $this->id,
             'topic' => $this->topic,

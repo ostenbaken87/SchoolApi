@@ -42,7 +42,6 @@ class LectureController extends Controller
     public function update(UpdateLectureRequest $request, Lecture $lecture): JsonResource
     {
         $lecture->update($request->validated());
-        
         return new LectureResource($lecture);
     }
 
@@ -51,6 +50,6 @@ class LectureController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return response()->json(Lecture::destroy($id), 204);
     }
 }

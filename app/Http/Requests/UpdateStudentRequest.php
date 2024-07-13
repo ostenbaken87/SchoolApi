@@ -25,6 +25,8 @@ class UpdateStudentRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:students,email,' . $this->student->id,
             'klass_id' => 'nullable|exists:App\Models\Klass,id',
+            'lectures' => 'array|nullable',
+            'lectures.*' => 'exists:lectures,id',
         ];
     }
 }

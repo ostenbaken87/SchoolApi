@@ -22,7 +22,7 @@ class UpdateLectureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'topic' => 'required|string|max:255|unique:lectures,topic' . $this->lecture->id,    
+            'topic' => 'required|string|max:255|unique:lectures,topic,' . $this->lecture->id,    
             'description' => 'required|string|max:255',
         ];
     }

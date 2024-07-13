@@ -16,8 +16,7 @@ Route::prefix('v1')->group(function () {
     Route::group(['prefix' => 'students/{student}'], function () {
         Route::post('add-lectures', [StudentController::class, 'addLectures']);
     });
-
+    
     Route::apiResource('klasses', KlassController::class);
-
     Route::apiResource('lectures', LectureController::class);
 });
