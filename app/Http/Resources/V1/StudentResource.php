@@ -15,6 +15,14 @@ class StudentResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if($request->query('onlyBasicInfo',false)) {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+            ];
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,

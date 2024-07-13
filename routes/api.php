@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::prefix('v1')->group(function () {
+    //Student Routes
     Route::apiResource('students', StudentController::class);
     Route::group(['prefix' => 'students/{student}'], function () {
         Route::post('add-lectures', [StudentController::class, 'addLectures']);

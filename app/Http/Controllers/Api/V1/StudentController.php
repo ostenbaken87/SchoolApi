@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Services\StudentService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Resources\V1\StudentResource;
 use App\Http\Requests\UpdateStudentRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentController extends Controller
 {
+    protected $studentService;
+    public function __construct(StudentService $studentService)
+    {
+        $this->studentService = $studentService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +30,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request)
+    public function store(StoreStudentRequest $request): JsonResource
     {
         return new StudentResource(Student::create($request->validated()));
     }
@@ -49,21 +55,14 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Student $student): JsonResponse
     {
         return response()->json($student->delete(), 204);
     }
 
-    public function addLectures(Student $student, Request $request)
+    public function addLectures(Student $student, Request $request): JsonResource
     {
-        $student = Student::findOrFail($student->id);
-
-        $lectures = $request->input('lectures',[]);
-        $student->lectures()->syncWithoutDetaching($lectures);
-
-        return response()->json([
-            'message' => 'Lectures added successfully',
-            'student' => $student->load('lectures')
-        ], 200);
+        $result = $this->studentService->addLectures($student, $request);
+        return new StudentResource($result['student']);
     }
 }
