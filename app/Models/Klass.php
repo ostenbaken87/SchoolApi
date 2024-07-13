@@ -21,6 +21,8 @@ class Klass extends Model
 
     public function lectures(): BelongsToMany
     {
-        return $this->BelongsToMany(Lecture::class);
+        return $this->BelongsToMany(Lecture::class,'klass_lecture')
+                    ->withPivot('order')
+                    ->orderBy('pivot_order');
     }
 }

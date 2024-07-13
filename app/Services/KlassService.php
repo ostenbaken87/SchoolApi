@@ -41,7 +41,7 @@ class KlassService
         $syncData = [];
 
         foreach ($lecturesOrder as $lecture) {
-            $syncData[$lecture['id']] = ['order' => $lecture['order']];
+            $syncData[$lecture['lecture_id']] = ['order' => $lecture['order']];
         }
 
         $klass->lectures()->sync($syncData);
